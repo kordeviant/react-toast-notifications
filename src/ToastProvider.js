@@ -11,17 +11,17 @@ const defaultComponents = { Toast: DefaultToast, ToastContainer };
 import { generateUEID } from './utils';
 import type {
   AddFn,
-  RemoveFn,
-  Callback,
-  ToastsType,
-  Options,
-  Placement,
-  Id,
+    RemoveFn,
+    Callback,
+    ToastsType,
+    Options,
+    Placement,
+    Id,
 } from './types';
 
 // $FlowFixMe
 const { Consumer, Provider } = React.createContext();
-const NOOP = () => {};
+const NOOP = () => { };
 const canUseDOM = !!(
   typeof window !== 'undefined' &&
   window.document &&
@@ -106,7 +106,7 @@ export class ToastProvider extends Component<Props, State> {
   };
 
   render() {
-    const { children, components, ...props } = this.props;
+    const { children, components, additionalStyles, ...props } = this.props;
     const { Toast, ToastContainer } = this.components;
     const { toasts } = this.state;
     const { add, remove } = this;
@@ -117,7 +117,7 @@ export class ToastProvider extends Component<Props, State> {
 
         {canUseDOM ? (
           createPortal(
-            <ToastContainer {...props}>
+            <ToastContainer style={additionalStyles} {...props}>
               {toasts.map(({ content, id, onDismiss, ...rest }) => (
                 <ToastController
                   key={id}
@@ -133,8 +133,8 @@ export class ToastProvider extends Component<Props, State> {
             document.body
           )
         ) : (
-          <ToastContainer {...props} /> // keep ReactDOM.hydrate happy
-        )}
+            <ToastContainer {...props} /> // keep ReactDOM.hydrate happy
+          )}
       </Provider>
     );
   }
